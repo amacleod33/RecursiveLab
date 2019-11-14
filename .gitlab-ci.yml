@@ -1,0 +1,100 @@
+# This file is a template, and might need editing before it works on your project.
+# This is the Gradle build system for JVM applications
+# https://gradle.org/
+# https://github.com/gradle/gradle
+
+stages:
+  - webcat
+  - first
+  - second
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/Gradle/.gradle
+
+
+compile:
+  stage: first
+  script:
+  - cd Gradle
+  - java --version
+  - gradle --version
+  - gradle compileJava
+
+test:
+  stage: second
+  script:
+  - cd Gradle
+  - gradle test
+
+webcat_fibonacci:
+  stage: webcat
+  variables:
+    WEBCATTARGET: "CPSC 255/Week-08-GitLab-Fibonacci"
+    WEBCATTITLE: ""
+    SRCFILES: "Fibonacci.java"
+  script:
+  - cd WebCAT
+  - 'if [[ -z "$WCUSER" ]]; then'
+  - '  echo "WCUSER value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCUSER" > login.txt;'
+  - 'fi'
+  - 'if [[ -z "$WCPASS" ]]; then'
+  - '  echo "WCPASS value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCPASS" >> login.txt;'
+  - 'fi'
+  - 'python3 webcat-submitter.py "$WEBCATTARGET" "$WEBCATTITLE" $SRCFILES'
+
+webcat_reverse:
+  stage: webcat
+  variables:
+    WEBCATTARGET: "CPSC 255/Week-08-GitLab-Reverse"
+    WEBCATTITLE: ""
+    SRCFILES: "Reverse.java"
+  script:
+  - cd WebCAT
+  - 'if [[ -z "$WCUSER" ]]; then'
+  - '  echo "WCUSER value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCUSER" > login.txt;'
+  - 'fi'
+  - 'if [[ -z "$WCPASS" ]]; then'
+  - '  echo "WCPASS value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCPASS" >> login.txt;'
+  - 'fi'
+  - 'python3 webcat-submitter.py "$WEBCATTARGET" "$WEBCATTITLE" $SRCFILES'
+
+webcat_path:
+  stage: webcat
+  variables:
+    WEBCATTARGET: "CPSC 255/Week-08-GitLab-Path"
+    WEBCATTITLE: ""
+    SRCFILES: "Path.java"
+  script:
+  - cd WebCAT
+  - 'if [[ -z "$WCUSER" ]]; then'
+  - '  echo "WCUSER value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCUSER" > login.txt;'
+  - 'fi'
+  - 'if [[ -z "$WCPASS" ]]; then'
+  - '  echo "WCPASS value is not set";'
+  - '  exit 1;'
+  - 'else'
+  - '  echo "$WCPASS" >> login.txt;'
+  - 'fi'
+  - 'python3 webcat-submitter.py "$WEBCATTARGET" "$WEBCATTITLE" $SRCFILES'
