@@ -8,7 +8,7 @@
 public class Fibonacci {
 
     /**
-     * returns fibonacci formula of number
+     * returns fibonacci formula of num
      * 
      * @param number
      *            input long
