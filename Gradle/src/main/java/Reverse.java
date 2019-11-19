@@ -1,25 +1,26 @@
 
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ * reverse a foo
  * 
- *  @author 
- *  @version 
+ * @author amacleod
+ * @version 11192019
  */
 public class Reverse {
+
+    /**
+     * reverses a string of foos
+     * 
+     * @param foo
+     * @return reversed foo
+     */
     public static Foo reverse(Foo foo) {
 
-        if(foo.isEmpty()) {
+        if (foo.isEmpty()) {
             return foo;
         }
-        
+
         return reverse(foo.cdr()).concat(foo.car());
-        
-        }
-        
-            
-        }
-    
 
+    }
 
+}
